@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  wbooks-database:
+    image: postgres
+    environment:
+      POSTGRES_DB: wolox_books_db
+      POSTGRES_USER: userDB
+      POSTGRES_PASSWORD: passwordDB
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql

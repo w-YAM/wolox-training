@@ -7,6 +7,7 @@
 
 # dependencies
 /node_modules
+/postgres_data
 
 # IDEs and editors
 /.idea
