@@ -8,16 +8,22 @@ export class BookService {
     }
 
     public getAll = async () => {
-        const book = Book.find()
-        return book
+        try {
+            const book = await Book.find()
+            console.log('============book',book);
+        } catch (error) {
+            console.error('============book error',error);
+        }
+        
+        return 'getAll books from BookService!'
     }
     public create = async () => {
-        return 'Create a book from BookService'
+        return 'Create a book from BookService!'
     }
     public update = async () => {
-        return 'Update a book from BookService'
+        return 'Update a book from BookService!'
     }
     public delete = async () => {
-        return 'Delete a book from BookService'
+        return 'Delete a book from BookService!'
     }
 }

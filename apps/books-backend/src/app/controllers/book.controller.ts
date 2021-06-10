@@ -11,20 +11,17 @@ export class BookController {
         this.routes()
     }
 
-    public getAll =  async (res: Response, req: Request) => {
-        const data = await this.bookService.getAll()
-        console.log('=================data', data);
-        
-        res.send(data).json()
+    public getAll =  async (req: Request, res: Response) => {
+        res.send(await this.bookService.getAll())
     }
-    public create =  async (res: Response, req: Request) => {
-        res.send(this.bookService.create())
+    public create =  async (req: Request, res: Response) => {
+        res.send(await this.bookService.create())
     }
-    public update =  async (res: Response, req: Request) => {
-        res.send(this.bookService.update())
+    public update =  async (req: Request, res: Response) => {
+        res.send(await this.bookService.update())
     }
-    public delete =  async (res: Response, req: Request) => {
-        res.send(this.bookService.delete())
+    public delete =  async (req: Request, res: Response) => {
+        res.send(await this.bookService.delete())
     }
     
     public routes(){
