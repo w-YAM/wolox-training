@@ -17,3 +17,24 @@ export class Book extends BaseEntity {
     @Column()
     price: number
 }
+
+export interface iBook {
+    title: string;
+    editorial: string;
+    year: number;
+    price: number;
+}
+
+export interface iCreateBook {
+    title: string;
+    editorial: string;
+    year: number;
+    price: number;
+}
+
+export interface iUpdateBook {
+    title: string;
+    editorial: string;
+    year: number;
+    price: number;
+}

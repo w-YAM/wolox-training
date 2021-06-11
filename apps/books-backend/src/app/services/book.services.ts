@@ -1,29 +1,48 @@
-import { Book } from "../entities/book.entity"
+import { Book, iBook, iCreateBook, iUpdateBook } from "../entities/book.entity"
 
 export class BookService {
     private book: Book
 
-    constructor(){
+    constructor() {
         this.book = new Book()
     }
 
     public getAll = async () => {
         try {
-            const book = await Book.find()
-            console.log('============book',book);
+            const books: iBook[] = await Book.find()
+            return { books }
         } catch (error) {
-            console.error('============book error',error);
+            console.error('getAll ERROR', error);
         }
-        
-        return 'getAll books from BookService!'
     }
-    public create = async () => {
-        return 'Create a book from BookService!'
+    public create = async (body: iCreateBook) => {
+        try {
+            const newBook = await Book.create(body).save() // Me genera error al usar solo save(body)
+            return { book: newBook }
+        } catch (error) {
+            console.error('create ERROR', error);
+        }
     }
-    public update = async () => {
-        return 'Update a book from BookService!'
+
+    public update = async (body: iUpdateBook, id: number) => {
+        try {
+            const oldBook: Book = await Book.findOne(id)
+
+            const book: iUpdateBook = { ...oldBook, ...body }
+            const updateBook = await Book.update(id, book)
+
+            return { updateBook, book }
+        } catch (error) {
+            console.error('update ERROR', error);
+        }
     }
-    public delete = async () => {
-        return 'Delete a book from BookService!'
+
+    public delete = async (id: number) => {
+        try {
+            const deleteBook = await Book.delete(id)
+            return { deleteBook }
+        } catch (error) {
+            console.error('delete ERROR', error);
+        }
     }
 }
