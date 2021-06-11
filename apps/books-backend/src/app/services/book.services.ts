@@ -27,7 +27,7 @@ export class BookService {
 
     public update = async (body: iUpdateBook): Promise<{
         updatedStatus: boolean,
-        book: iBook
+        book: iUpdateBook
     }> => {
         try {
             const oldBook: Book = await Book.findOne(body.id)

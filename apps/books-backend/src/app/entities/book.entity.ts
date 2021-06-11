@@ -26,7 +26,7 @@ interface iBookBase {
 }
 
 export interface iBook extends iBookBase {
-    id: number
+    readonly id: number
 }
 
 export interface iCreateBook extends iBookBase { }
