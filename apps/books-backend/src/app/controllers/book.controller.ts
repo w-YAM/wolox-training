@@ -13,8 +13,10 @@ export class BookController {
     }
 
     public getAll = async (req: Request, res: Response) => {
-        res.send(await this.bookService.getAll())
+        const books = await this.bookService.getAll()
+        res.status(200).send({ books })
     }
+
     public create = async (req: Request, res: Response) => {
         const randomNumber = Math.floor(Math.random() * 100);
         const body: iCreateBook = {
@@ -26,26 +28,26 @@ export class BookController {
 
         const newBook = await this.bookService.create(body)
 
-        res.send(newBook)
+        res.status(201).send(newBook)
     }
 
     public update = async (req: Request, res: Response) => {
         const randomNumber = Math.floor(Math.random() * 100);
         const body: iUpdateBook = {
+            id: Number(req.params.id),
             title: `Hello_updated_${randomNumber}`,
             editorial: `Editorial_updated_${randomNumber}`,
             year: 1999 + randomNumber,
             price: 50000 + randomNumber,
         }
 
-        const bookId: number = Number(req.params.id)
 
-        res.send(await this.bookService.update(body, bookId))
+        res.status(200).send(await this.bookService.update(body))
     }
 
     public delete = async (req: Request, res: Response) => {
         const bookId: number = Number(req.params.id)
-        res.send(await this.bookService.delete(bookId))
+        res.status(200).send(await this.bookService.delete(bookId))
     }
 
     public routes() {

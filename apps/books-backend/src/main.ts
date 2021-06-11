@@ -29,20 +29,23 @@ const dbConfig = {
 }
 
 createConnection(dbConfig).then(async (connection: Connection) => {
-  const app = express();
+  const app: express.Express = express();
+  const port: number = parseInt(process.env.port) || 3333;
+
   const bookController = new BookController()
 
   console.log('Listing dbConnection OK', connection.isConnected)
+
   app.get('/api', (req: Request, res: Response) => {
     res.send({ message: 'Welcome to books-backend!' });
   });
 
   app.use('/api/books/', bookController.router)
 
-  const port = process.env.port || 3333;
   const server = app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}/api`);
   });
+
   server.on('error', console.error);
 }).catch(err => {
   console.log('ERROR dbConnection', err);

@@ -18,23 +18,17 @@ export class Book extends BaseEntity {
     price: number
 }
 
-export interface iBook {
+interface iBookBase {
     title: string;
     editorial: string;
     year: number;
     price: number;
 }
 
-export interface iCreateBook {
-    title: string;
-    editorial: string;
-    year: number;
-    price: number;
+export interface iBook extends iBookBase {
+    id: number
 }
 
-export interface iUpdateBook {
-    title: string;
-    editorial: string;
-    year: number;
-    price: number;
-}
+export interface iCreateBook extends iBookBase { }
+
+export interface iUpdateBook extends iBook { }
