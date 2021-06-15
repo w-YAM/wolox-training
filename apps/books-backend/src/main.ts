@@ -10,6 +10,9 @@ import { BookController } from './app/controllers/book.controller';
 import { Connection, createConnection } from "typeorm";
 import { Book } from "./app/entities/book.entity";
 import { Author } from "./app/entities/author.entity";
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs } from "./graphql/typeDefs";
+import { resolvers } from "./graphql/resolvers";
 
 const dbConfig = {
   name: "default",
@@ -29,12 +32,14 @@ const dbConfig = {
 }
 
 createConnection(dbConfig).then(async (connection: Connection) => {
+  const serverGPL = new ApolloServer({ typeDefs, resolvers });
   const app: express.Express = express();
   const port: number = parseInt(process.env.port) || 3333;
+  serverGPL.applyMiddleware({ app });
 
   const bookController = new BookController()
 
-  console.log('Listing dbConnection OK', connection.isConnected)
+  console.log('🚀 DB Connection =>', connection.isConnected)
 
   app.get('/api', (req: Request, res: Response) => {
     res.send({ message: 'Welcome to books-backend!' });
@@ -43,7 +48,8 @@ createConnection(dbConfig).then(async (connection: Connection) => {
   app.use('/api/books/', bookController.router)
 
   const server = app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/api`);
+    console.log(`🚀 RESTful API Server ready http://localhost:${port}/api`);
+    console.log(`🚀 GraphQL Server ready at http://localhost:${port}${serverGPL.graphqlPath}`)
   });
 
   server.on('error', console.error);
