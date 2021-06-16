@@ -34,7 +34,7 @@ export class BookService {
 
             const book: iUpdateBook = { ...oldBook, ...body }
             const updateBook = await Book.update(book.id, book)
-            const updatedStatus: boolean = !!updateBook.affected
+            const updatedStatus: boolean = !!updateBook.affected || false
 
             return { updatedStatus, book }
         } catch (error) {
@@ -47,7 +47,7 @@ export class BookService {
     }> => {
         try {
             const deleteBook = await Book.delete(id)
-            const deletedStatus: boolean = !!deleteBook.affected
+            const deletedStatus: boolean = !!deleteBook.affected || false
             return { deletedStatus }
         } catch (error) {
             console.error('delete ERROR', error);
